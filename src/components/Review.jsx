@@ -45,13 +45,24 @@ const Review = ({ selectedSlot, formData, onEdit }) => {
           <span className="text-sm text-gray-500 font-bold">US | EST</span>
         </div>
         <div className="relative">
-          <input
-            type="text"
-            value={formattedDate ? `${formattedDate} at ${selectedSlot.time}` : ""}
-            readOnly
-            className="shadow-xl p-2 rounded-lg w-full"
-            placeholder="Select a date and time"
-          />
+        <input
+  type="text"
+  value={
+    selectedSlot
+      ? `${formattedDate} at ${selectedSlot.time} to ${
+          new Date(
+            new Date(`1970-01-01T${selectedSlot.time}`).getTime() + 60 * 60 * 1000
+          )
+            .toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })
+            .replace(/:\d{2}$/, "")
+        }`
+      : ""
+  }
+  readOnly
+  className="shadow-xl p-2 rounded-lg w-full"
+  placeholder="Select a date and time"
+/>
+
           <button
             onClick={() => onEdit(0)} // Navigate to Calendar
             className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-900 text-white rounded-lg p-1 w-[80px]"
