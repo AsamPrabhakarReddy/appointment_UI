@@ -6,7 +6,7 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
   const getWeekDates = (date) => {
     const startOfWeek = new Date(date);
     startOfWeek.setDate(date.getDate() - date.getDay() + 1); // Monday
-    return Array.from({ length: 5 }, (_, i) => {
+    return Array.from({ length: 6 }, (_, i) => {
       const weekDate = new Date(startOfWeek);
       weekDate.setDate(startOfWeek.getDate() + i);
       return weekDate;
@@ -128,7 +128,7 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
       </div>
 
       {/* Weekday Row */}
-      <div className="grid grid-cols-5 gap-4 mt-4 w-full max-w-lg">
+      <div className="grid grid-cols-6 gap-4 mt-4 w-full max-w-lg">
         {currentWeek.map((date, index) => (
           <div
             key={index}
@@ -145,33 +145,34 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
             <span className="font-bold text-gray-700">
               {date.toLocaleString("default", { weekday: "short" })} {/* Mon, Tue */}
             </span>
-            <span className="text-gray-500">{date.getDate()}</span>
+            <span className="text-gray-500 ">{date.getDate()}</span>
           </div>
         ))}
       </div>
 
-      {/* Time Slots */}
-      <div className="grid grid-cols-5 gap-4 mt-4 w-full max-w-lg">
+     {/* Time Slots */}
+    <div className="grid grid-cols-6 gap-4 mt-4 w-full max-w-lg">
         {currentWeek.map((date, dayIndex) => (
-          <div key={dayIndex} className="flex flex-col bg-white shadow-md rounded-md p-2">
+            <div key={dayIndex} className="flex flex-col bg-white shadow-md rounded-md p-2">
             {timeSlots.map((slot, idx) => (
-              <div
+                <div
                 key={idx}
+                style={{ width: 'calc(100% + 5px)' }} // Add 5px to the slot width
                 className={`text-center text-gray-700 text-sm py-1 border-b last:border-none hover:bg-blue-100 cursor-pointer ${
-                  selectedSlot &&
-                  date.toDateString() === selectedSlot.date.toDateString() &&
-                  slot === selectedSlot.time
+                    selectedSlot &&
+                    date.toDateString() === selectedSlot.date.toDateString() &&
+                    slot === selectedSlot.time
                     ? "bg-blue-200"
                     : ""
                 }`}
                 onClick={() => onSlotSelect(date, slot)}
-              >
+                >
                 {slot}
-              </div>
+                </div>
             ))}
-          </div>
+            </div>
         ))}
-      </div>
+    </div>
 
       {/* Selected Slot Display */}
       {selectedSlot && (

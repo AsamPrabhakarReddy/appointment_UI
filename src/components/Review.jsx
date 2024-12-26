@@ -14,14 +14,22 @@ const Review = ({ selectedSlot, formData, onEdit }) => {
 
     const handleSubmit = (e)=>{
         e.preventDefault();
-        Swal.fire({
-            icon: "success", 
-            title: "Booking was successful",
-            text: `Your slot is booked for : ${selectedSlot.date.toDateString()} at ${selectedSlot.time}.
-                   Name : ${JSON.stringify(formData.name)}\n
-                   Email : ${JSON.stringify(formData.email)}\n
-                   ` 
-        });
+        if(formData.name !== "" && formData.email !== ""  && selectedSlot.date.toDateString() !== ""  && selectedSlot.time !== ""){
+            Swal.fire({
+                icon: "success", 
+                title: "Booking was successful",
+                text: `Your slot is booked for : ${selectedSlot.date.toDateString()} at ${selectedSlot.time}.
+                    Name : ${JSON.stringify(formData.name)}\n
+                    Email : ${JSON.stringify(formData.email)}\n
+                    ` 
+            });
+        }else{
+            Swal.fire({
+                icon: "error", 
+                title: "Not found the data",
+                text: "PLEASE enter all fields data!"
+            });
+        }
         
     }
   return (
