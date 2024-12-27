@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Calendar from "./Calender";
 import Information from "./Information";
 import Review from "./Review";
+import Swal from "sweetalert2";
 
 const Hero = () => {
   const sections = [
@@ -18,9 +19,30 @@ const Hero = () => {
     saveInfo: false,
   });
 
+
+
   const handleIndex = (index) => {
+    if (selectedIndex === 0 && !selectedSlot) {
+        Swal.fire({
+            icon:"info",
+            title:"Data Not Found",
+            text:"Please select a date and time slot before proceeding."
+        })
+      return;
+    }
+  
+    if (selectedIndex === 1 && (!formData.name || !formData.email)) {
+        Swal.fire({
+            icon:"info",
+            title:"Data Not Found",
+            text:"Please fill in all required information before proceeding."
+        })
+      return;
+    }
+  
     setSelectedIndex(index);
   };
+  
 
   const [currentTime, setCurrentTime] = useState("");
 

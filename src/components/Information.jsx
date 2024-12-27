@@ -63,31 +63,32 @@ const Information = ({ formData, setFormData ,setSelectedIndex }) => {
 
         {/* Email Text */}
         <div className="mb-4 lg:ml-[20%] p-4 rounded-lg">
-          <p className="text-gray-600">
-            Please send an email to{" "}
-            <a href="mailto:ravi@mannamlaw.com" className="text-blue-600 underline">
-              ravi@mannamlaw.com
-            </a>
-            ,{" "}
-            <a href="mailto:Hemanth@mannamlaw.com" className="text-blue-600 underline">
-              Hemanth@mannamlaw.com
-            </a>
-            ,{" "}
-            <a href="mailto:sabirou@mannamlaw.com" className="text-blue-600 underline">
-              sabirou@mannamlaw.com
-            </a>
-            ,{" "}
-            <a href="mailto:kanchi@mannamlaw.com" className="text-blue-600 underline">
-              kanchi@mannamlaw.com
-            </a>
-            ,{" "}
-            <a href="mailto:shruti@mannamlaw.com" className="text-blue-600 underline">
-              shruti@mannamlaw.com
-            </a>
-            . This email should provide a brief synopsis of the legal issue to be
-            discussed. Please wait for Mr. Mannam's reply and/or call to confirm
-            the appointment.
-          </p>
+            <p className="text-gray-600 text-justify leading-relaxed">
+                Please send an email to{" "}
+                <a href="mailto:ravi@mannamlaw.com" className="text-blue-600 underline break-all">
+                    ravi@mannamlaw.com
+                </a>
+                ,{" "}
+                <span className="text-gray-600">Copying to </span>
+                <a href="mailto:Hemanth@mannamlaw.com" className="text-blue-600 underline break-all">
+                    Hemanth@mannamlaw.com
+                </a>
+                ,{" "}
+                <a href="mailto:sabirou@mannamlaw.com" className="text-blue-600 underline break-all">
+                    sabirou@mannamlaw.com
+                </a>
+                ,{" "}
+                <a href="mailto:kanchi@mannamlaw.com" className="text-blue-600 underline break-all">
+                    kanchi@mannamlaw.com
+                </a>
+                ,{" "}
+                <a href="mailto:shruti@mannamlaw.com" className="text-blue-600 underline break-all">
+                    shruti@mannamlaw.com
+                </a>
+                . This email should provide a brief synopsis of the legal issue to be
+                discussed. Please wait for Mr. Mannam's reply and/or call to confirm
+                the appointment.
+            </p>
         </div>
 
         {/* Save Info Checkbox */}

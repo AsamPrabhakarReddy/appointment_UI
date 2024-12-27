@@ -1,72 +1,83 @@
 import React, { useState } from "react";
 
 const Calendar = ({ selectedSlot, onSlotSelect }) => {
-  const [currentDate, setCurrentDate] = useState(new Date());
 
-  const getWeekDates = (date) => {
-    const startOfWeek = new Date(date);
-    startOfWeek.setDate(date.getDate() - date.getDay() + 1); // Monday
-    return Array.from({ length: 6 }, (_, i) => {
-      const weekDate = new Date(startOfWeek);
-      weekDate.setDate(startOfWeek.getDate() + i);
-      return weekDate;
-    });
-  };
+    const [currentDate, setCurrentDate] = useState(new Date());
 
-  const currentWeek = getWeekDates(currentDate);
-  const currentMonth = currentWeek[0].toLocaleString("default", { month: "long" });
-  const currentYear = currentWeek[0].getFullYear();
-
-  const timeSlots = [
-    "08:30 AM",
-    "09:30 AM",
-    "10:30 AM",
-    "11:30 AM",
-    "12:30 PM",
-    "01:30 PM",
-    "02:30 PM",
-    "03:30 PM",
-    "04:30 PM",
-    "05:30 PM"
-  ];
-
-  // Handlers for navigation
-  const handleNextWeek = () => {
-    const nextWeek = new Date(currentDate);
-    nextWeek.setDate(currentDate.getDate() + 7);
-    setCurrentDate(nextWeek);
-  };
-
-  const handlePreviousWeek = () => {
-    const prevWeek = new Date(currentDate);
-    prevWeek.setDate(currentDate.getDate() - 7);
-    setCurrentDate(prevWeek);
-  };
-
-  const handleNextMonth = () => {
-    const nextMonth = new Date(currentDate);
-    nextMonth.setMonth(currentDate.getMonth() + 1);
-    setCurrentDate(nextMonth);
-  };
-
-  const handlePreviousMonth = () => {
-    const prevMonth = new Date(currentDate);
-    prevMonth.setMonth(currentDate.getMonth() - 1);
-    setCurrentDate(prevMonth);
-  };
-
-  const handleNextYear = () => {
-    const nextYear = new Date(currentDate);
-    nextYear.setFullYear(currentDate.getFullYear() + 1);
-    setCurrentDate(nextYear);
-  };
-
-  const handlePreviousYear = () => {
-    const prevYear = new Date(currentDate);
-    prevYear.setFullYear(currentDate.getFullYear() - 1);
-    setCurrentDate(prevYear);
-  };
-
+    const getWeekDatesFromToday = (startDate) => {
+        return Array.from({ length: 7 }, (_, i) => {
+          const weekDate = new Date(startDate);
+          weekDate.setDate(startDate.getDate() + i);
+          return weekDate;
+        }).filter((date) => date.getDay() !== 0); // Exclude Sundays
+      };
+  
+    const currentWeek = getWeekDatesFromToday(currentDate);
+    const currentMonth = currentWeek[0]?.toLocaleString("default", { month: "long" });
+    const currentYear = currentWeek[0]?.getFullYear();
+  
+    const timeSlots = [
+      "08:30 AM",
+      "09:30 AM",
+      "10:30 AM",
+      "11:30 AM",
+      "12:30 PM",
+      "01:30 PM",
+      "02:30 PM",
+      "03:30 PM",
+      "04:30 PM",
+      "05:30 PM"
+    ];
+  
+    // Handlers for navigation
+    const handleNextWeek = () => {
+      setCurrentDate((prev) => {
+        const nextWeek = new Date(prev);
+        nextWeek.setDate(prev.getDate() + 7);
+        return nextWeek;
+      });
+    };
+  
+    const handlePreviousWeek = () => {
+      setCurrentDate((prev) => {
+        const prevWeek = new Date(prev);
+        prevWeek.setDate(prev.getDate() - 7);
+        return prevWeek;
+      });
+    };
+  
+    const handleNextMonth = () => {
+      setCurrentDate((prev) => {
+        const nextMonth = new Date(prev);
+        nextMonth.setMonth(prev.getMonth() + 1);
+        return nextMonth;
+      });
+    };
+  
+    const handlePreviousMonth = () => {
+      setCurrentDate((prev) => {
+        const prevMonth = new Date(prev);
+        prevMonth.setMonth(prev.getMonth() - 1);
+        return prevMonth;
+      });
+    };
+  
+    const handleNextYear = () => {
+      setCurrentDate((prev) => {
+        const nextYear = new Date(prev);
+        nextYear.setFullYear(prev.getFullYear() + 1);
+        return nextYear;
+      });
+    };
+  
+    const handlePreviousYear = () => {
+      setCurrentDate((prev) => {
+        const prevYear = new Date(prev);
+        prevYear.setFullYear(prev.getFullYear() - 1);
+        return prevYear;
+      });
+    };
+  
   const isSlotSelected = (date, time) => {
     if (!selectedSlot) return false;
     return (
@@ -129,7 +140,7 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
       </div>
   
       {/* Weekday Row */}
-      <div className="lg:ml-[100px] grid grid-cols-7 gap-4 mt-4 w-full px-4">
+      <div className="lg:ml-[100px] ml-[40px] grid grid-cols-7 gap-4 mt-4 w-full px-4">
         {currentWeek.map((date, index) => {
           const isPastDate = date < new Date().setHours(0, 0, 0, 0); // Check if the date is in the past
           return (
