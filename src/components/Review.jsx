@@ -41,7 +41,7 @@ const Review = ({ selectedSlot, formData, onEdit }) => {
   };
   return (
     <div className="flex flex-col items-center bg-gray-100 p-4 rounded">
-      <div className="md:text-3xl text-2xl font-bold text-primaryColor mb-4 text-center tracking-tight">
+      <div className="text-2xl font-bold text-primaryColor mb-4 text-center ">
         Review & confirm your booking
       </div>
 
