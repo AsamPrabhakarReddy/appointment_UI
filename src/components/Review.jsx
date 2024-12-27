@@ -1,7 +1,7 @@
 import React from "react";
 import Swal from "sweetalert2";
 import { MdArrowRightAlt } from "react-icons/md";
-
+import axios from "axios";
 const Review = ({ selectedSlot, formData, onEdit }) => {
   // Format the selected date
   const formattedDate = selectedSlot
@@ -13,32 +13,66 @@ const Review = ({ selectedSlot, formData, onEdit }) => {
       })
     : "";
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (
-      formData.name !== "" &&
-      formData.email !== "" &&
-      selectedSlot.date.toDateString() !== "" &&
-      selectedSlot.time !== ""
-    ) {
-      Swal.fire({
-        icon: "success",
-        title: "Booking was successful",
-        text: `Your slot is booked for : ${selectedSlot.date.toDateString()} at ${
-          selectedSlot.time
-        }.
-                    Name : ${JSON.stringify(formData.name)}\n
-                    Email : ${JSON.stringify(formData.email)}\n
-                    `,
-      });
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Not found the data",
-        text: "PLEASE enter all fields data!",
-      });
+    const handleSubmit = async (e)=>{
+      e.preventDefault();
+      // console.log("final submit data :", data);
+      if (
+          formData.name !== "" &&
+          formData.email !== "" &&
+          selectedSlot.date.toDateString() !== "" &&
+          selectedSlot.time !== ""
+      ) {
+          try {
+              // Prepare data for the API
+              const requestData = {
+                  selectedSlot: {
+                      date: selectedSlot.date.toISOString(), // Format as ISO string
+                      time: selectedSlot.time,
+                  },
+                  formData: {
+                      name: formData.name,
+                      email: formData.email,
+                  },
+              };
+  
+              // Make POST request
+              // const response = await axios.post("http://localhost:9090/api/BookingSlot", requestData);
+              
+              const response = await axios.post("https://appointment-backend-syyd.onrender.com/api/BookingSlot", requestData);
+
+              // Handle success response
+              if (response.status === 201) {
+                  Swal.fire({
+                      icon: "success",
+                      title: "Booking was successful",
+                      text: `Your slot is booked for : ${selectedSlot.date.toDateString()} at ${selectedSlot.time}.
+                      Name : ${formData.name}\n
+                      Email : ${formData.email}\n`,
+                  });
+              } else {
+                  Swal.fire({
+                      icon: "warning",
+                      title: "Booking was successful",
+                      text: "Booking completed, but there was an unexpected response from the server.",
+                  });
+              }
+          } catch (error) {
+              console.error("Error booking slot:", error);
+              Swal.fire({
+                  icon: "error",
+                  title: "Booking failed",
+                  text: "An error occurred while booking your slot. Please try again.",
+              });
+          }
+      } else {
+          Swal.fire({
+              icon: "error",
+              title: "Missing Data",
+              text: "Please fill out all required fields!",
+          });
+      }
+      
     }
-  };
   return (
     <div className="flex flex-col items-center bg-gray-100 p-4 rounded">
       <div className="md:text-3xl text-2xl font-bold text-primaryColor mb-4 text-center tracking-tight">
