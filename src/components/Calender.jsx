@@ -50,7 +50,7 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
 
   return (
     <div className="flex flex-col items-center bg-gray-100 p-4 rounded">
-      <div className="md:text-3xl text-2xl font-bold text-primaryColor mb-4 text-center">
+      <div className="md:text-3xl  text-2xl font-bold text-primaryColor mb-4 text-center tracking-tight">
         Pick a Date & Time
       </div>
 
@@ -102,7 +102,7 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
       </div>
 
       {/* Weekday and Time Slots */}
-      <div className="lg:ml-[100px] grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-4 mt-4 w-full px-2 sm:px-4">
+      <div className="py-4 grid lg:grid-cols-6 grid-cols-2 gap-4 mt-4 w-full px-2 ">
         {currentWeek.map((date, index) => (
           <div
             key={index}
@@ -112,18 +112,22 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
                 : ""
             }`}
           >
-            <span className="font-bold text-gray-700 truncate w-full text-center">
-              {date.toLocaleString("default", { weekday: "short" })}
-            </span>
-            <span className="text-gray-500">{date.getDate()}</span>
-            <div className="grid grid-cols-1 gap-1 mt-2">
+            <div className="flex flex-row">
+              <span className="font-semibold text-gray-700 truncate w-full text-center">
+                {date.getDate()}
+              </span>
+              <span className="font-semibold ml-[4px] text-gray-700 w-full text-center">
+                {date.toLocaleString("default", { weekday: "short" })}
+              </span>
+            </div>
+            <div className="grid grid-cols-1 gap-[7px] mt-2 w-[100%] rounded">
               {timeSlots.map((slot, idx) => (
                 <div
                   key={idx}
-                  className={`text-center text-xs sm:text-sm py-1 border-b last:border-none ${
+                  className={`text-center text-xs sm:text-sm lg:py-2 py-[6px] border-[0.5px] shadow-sm hover:shadow-none hover:border-none transition ease-in-out duration-300 rounded font-medium text-gray-700 ${
                     date < new Date().setHours(0, 0, 0, 0)
                       ? "opacity-50 cursor-not-allowed"
-                      : "hover:bg-blue-100 cursor-pointer"
+                      : "hover:bg-blue-200 cursor-pointer"
                   } ${isSlotSelected(date, slot) ? "bg-blue-200" : ""}`}
                   onClick={() => {
                     if (date >= new Date().setHours(0, 0, 0, 0)) {
