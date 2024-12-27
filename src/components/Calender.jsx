@@ -12,7 +12,9 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
   };
 
   const currentWeek = getWeekDatesFromToday(currentDate);
-  const currentMonth = currentWeek[0]?.toLocaleString("default", { month: "long" });
+  const currentMonth = currentWeek[0]?.toLocaleString("default", {
+    month: "long",
+  });
   const currentYear = currentWeek[0]?.getFullYear();
 
   const timeSlots = [
@@ -47,37 +49,37 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
   };
 
   return (
-    <div className="flex flex-col items-center bg-gray-100 p-4 w-full max-w-4xl mx-auto">
-      <div className="text-xl sm:text-3xl font-bold text-blue-900 mb-4 text-center">
+    <div className="flex flex-col items-center bg-gray-100 p-4 rounded">
+      <div className="md:text-3xl text-2xl font-bold text-primaryColor mb-4 text-center">
         Pick a Date & Time
       </div>
 
       {/* Calendar Header */}
-      <div className="flex justify-between items-center bg-blue-500 text-white px-4 py-2 rounded-md w-full max-w-full">
+      <div className="flex justify-between items-center bg-primaryColor text-white px-4 py-2 rounded w-full max-w-full cursor-pointer">
         <button
           onClick={() => handleNavigation("year", -1)}
-          className="px-2 font-bold hover:bg-blue-700 rounded"
+          className="px-2 font-semibold hover:bg-[#1a1a1a] "
         >
           {"<<"}
         </button>
         <button
           onClick={() => handleNavigation("month", -1)}
-          className="px-2 font-bold hover:bg-blue-700 rounded"
+          className="px-2 font-semibold hover:bg-[#1a1a1a] "
         >
           {"<"}
         </button>
-        <h1 className="text-sm sm:text-lg font-bold truncate max-w-[120px] sm:max-w-[200px]">
+        <h1 className="text-sm sm:text-lg font-semibold truncate max-w-[120px] sm:max-w-[200px]">
           {currentMonth} {currentYear}
         </h1>
         <button
           onClick={() => handleNavigation("month", 1)}
-          className="px-2 font-bold hover:bg-blue-700 rounded"
+          className="px-2 font-semibold hover:bg-[#1a1a1a] "
         >
           {">"}
         </button>
         <button
           onClick={() => handleNavigation("year", 1)}
-          className="px-2 font-bold hover:bg-blue-700 rounded"
+          className="px-2 font-semibold hover:bg-[#1a1a1a] "
         >
           {">>"}
         </button>
@@ -87,13 +89,13 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
       <div className="flex justify-between items-center w-full max-w-full mt-4">
         <button
           onClick={() => handleNavigation("week", -1)}
-          className="bg-gray-300 px-4 py-2 rounded-md hover:bg-gray-400 text-sm sm:text-base"
+          className="bg-primaryColor lg:px-6 px-4 py-2 rounded text-white md:text-base text-sm"
         >
-          Previous Week
+          Last Week
         </button>
         <button
           onClick={() => handleNavigation("week", 1)}
-          className="bg-gray-300 px-4 py-2 rounded-md hover:bg-gray-400 text-sm sm:text-base"
+          className="bg-primaryColor lg:px-6 px-4 py-2 rounded text-white md:text-base text-sm"
         >
           Next Week
         </button>
@@ -104,7 +106,7 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
         {currentWeek.map((date, index) => (
           <div
             key={index}
-            className={`flex flex-col items-center bg-white shadow-md rounded-md p-2 cursor-pointer text-xs sm:text-base ${
+            className={`flex flex-col items-center bg-white shadow-md rounded p-2 cursor-pointer text-xs sm:text-base ${
               date < new Date().setHours(0, 0, 0, 0)
                 ? "opacity-50 cursor-not-allowed"
                 : ""
@@ -122,9 +124,7 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
                     date < new Date().setHours(0, 0, 0, 0)
                       ? "opacity-50 cursor-not-allowed"
                       : "hover:bg-blue-100 cursor-pointer"
-                  } ${
-                    isSlotSelected(date, slot) ? "bg-blue-200" : ""
-                  }`}
+                  } ${isSlotSelected(date, slot) ? "bg-blue-200" : ""}`}
                   onClick={() => {
                     if (date >= new Date().setHours(0, 0, 0, 0)) {
                       onSlotSelect(date, slot);
@@ -141,8 +141,9 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
 
       {/* Selected Slot Display */}
       {selectedSlot && (
-        <div className="mt-4 text-green-600 font-semibold text-xs sm:text-base px-4">
-          Selected Slot: {selectedSlot.date.toDateString()} at {selectedSlot.time}
+        <div className="mt-4 text-primaryColor font-semibold text-xs sm:text-base px-4">
+          Selected Slot: {selectedSlot.date.toDateString()} at{" "}
+          {selectedSlot.time}
         </div>
       )}
     </div>
