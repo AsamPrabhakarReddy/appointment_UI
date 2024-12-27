@@ -28,12 +28,12 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
     "05:30 PM",
   ];
 
-  const handleNavigation = (type, amount) => {
+  const handleNavigation = (type, step) => {
     setCurrentDate((prev) => {
       const newDate = new Date(prev);
-      if (type === "week") newDate.setDate(prev.getDate() + amount * 7);
-      if (type === "month") newDate.setMonth(prev.getMonth() + amount);
-      if (type === "year") newDate.setFullYear(prev.getFullYear() + amount);
+      if (type === "week") newDate.setDate(prev.getDate() + step * 7);
+      if (type === "month") newDate.setMonth(prev.getMonth() + step);
+      if (type === "year") newDate.setFullYear(prev.getFullYear() + step);
       return newDate;
     });
   };
@@ -105,17 +105,10 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
           <div
             key={index}
             className={`flex flex-col items-center bg-white shadow-md rounded-md p-2 cursor-pointer text-xs sm:text-base ${
-              selectedSlot && date.toDateString() === selectedSlot.date.toDateString()
-                ? "border-2 border-blue-500"
-                : date < new Date().setHours(0, 0, 0, 0)
+              date < new Date().setHours(0, 0, 0, 0)
                 ? "opacity-50 cursor-not-allowed"
                 : ""
             }`}
-            onClick={() => {
-              if (date >= new Date().setHours(0, 0, 0, 0)) {
-                onSlotSelect(date, null);
-              }
-            }}
           >
             <span className="font-bold text-gray-700 truncate w-full text-center">
               {date.toLocaleString("default", { weekday: "short" })}
