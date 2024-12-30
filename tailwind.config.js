@@ -5,7 +5,7 @@ export default {
     extend: {
       container: {},
       colors: {
-        primaryColor: "#00684A",
+        primaryColor: "#AE275F",
         blackColor: "#1A1A1A",
       },
     },

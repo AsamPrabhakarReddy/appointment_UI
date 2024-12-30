@@ -67,7 +67,7 @@ const Review = ({ selectedSlot, formData, onEdit }) => {
       } else {
           Swal.fire({
               icon: "error",
-              title: "Missing Data",
+              title: "Required fields are missing",
               text: "Please fill out all required fields!",
           });
       }

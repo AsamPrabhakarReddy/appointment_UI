@@ -23,7 +23,7 @@ const Hero = () => {
     if (selectedIndex === 0 && !selectedSlot) {
       Swal.fire({
         icon: "info",
-        title: "Data Not Found",
+        title: "Required fields are missing",
         text: "Please select a date and time slot before proceeding.",
       });
       return;
@@ -120,7 +120,7 @@ const Hero = () => {
                     className={`lg:p-3 p-2 cursor-pointer rounded ${
                       selectedIndex === index
                         ? "bg-primaryColor text-white"
-                        : "bg-gray-300 text-gray-500"
+                        : "bg-gray-300 text-gray-600"
                     }`}
                     onClick={() => handleIndex(index)}
                   >
