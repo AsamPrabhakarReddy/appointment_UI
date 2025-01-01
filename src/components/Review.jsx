@@ -39,7 +39,7 @@ const Review = ({ selectedSlot, formData, onEdit }) => {
               // const response = await axios.post("http://localhost:9090/api/BookingSlot", requestData);
               
               const response = await axios.post("https://appointment-backend-syyd.onrender.com/api/BookingSlot", requestData);
-
+              
               // Handle success response
               if (response.status === 201) {
                   Swal.fire({
