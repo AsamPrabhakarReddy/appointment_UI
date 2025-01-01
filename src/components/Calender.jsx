@@ -89,7 +89,7 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
       <div className="flex justify-between items-center w-full max-w-full mt-4">
         <button
           onClick={() => handleNavigation("week", -1)}
-          className="bg-primaryColor lg:px-6 px-4 py-2 rounded text-white md:text-base text-sm"
+          className="bg-white border-primaryColor border text-primaryColor lg:px-6 px-4 py-2 rounded  md:text-base text-sm"
         >
           Last Week
         </button>
