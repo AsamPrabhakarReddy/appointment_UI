@@ -8,7 +8,7 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
       const weekDate = new Date(startDate);
       weekDate.setDate(startDate.getDate() + i);
       return weekDate;
-    }).filter((date) => date.getDay() !== 0); // Exclude Sundays
+    }).filter((date) => date.getDay() !== 0 && date.getDay() !== 6); // Exclude Sundays
   };
 
   const currentWeek = getWeekDatesFromToday(currentDate);
@@ -18,16 +18,8 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
   const currentYear = currentWeek[0]?.getFullYear();
 
   const timeSlots = [
-    "08:30 AM",
-    "09:30 AM",
-    "10:30 AM",
-    "11:30 AM",
-    "12:30 PM",
-    "01:30 PM",
-    "02:30 PM",
-    "03:30 PM",
-    "04:30 PM",
-    "05:30 PM",
+   "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM"
+
   ];
 
   const handleNavigation = (type, step) => {
@@ -89,7 +81,7 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
       <div className="flex justify-between items-center w-full max-w-full mt-4">
         <button
           onClick={() => handleNavigation("week", -1)}
-          className="bg-white border-primaryColor border text-primaryColor lg:px-6 px-4 py-2 rounded  md:text-base text-sm"
+          className="bg-primaryColor lg:px-6 px-4 py-2 rounded text-white md:text-base text-sm"
         >
           Last Week
         </button>
@@ -102,7 +94,7 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
       </div>
 
       {/* Weekday and Time Slots */}
-      <div className="py-4 grid lg:grid-cols-6 grid-cols-2 gap-4 mt-4 w-full px-2 ">
+      <div className="py-4 grid lg:grid-cols-5 grid-cols-2 gap-4 mt-4 w-full px-2 ">
         {currentWeek.map((date, index) => (
           <div
             key={index}
@@ -150,6 +142,14 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
           {selectedSlot.time}
         </div>
       )}
+
+    <div className="mt-2 text-primaryColor font-semibold text-xs sm:text-base px-4">
+      <p className="flex items-center">
+        Please note that Mannam & Associates is available for work from Monday to Friday.
+      </p>
+    </div>
+
+
     </div>
   );
 };

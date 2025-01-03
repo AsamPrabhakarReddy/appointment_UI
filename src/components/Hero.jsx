@@ -91,6 +91,7 @@ const Hero = () => {
             selectedSlot={selectedSlot}
             formData={formData}
             onEdit={handleEdit}
+            setSelectedIndex={handleIndex}
           />
         );
       default:
@@ -105,9 +106,9 @@ const Hero = () => {
       <div className="lg:pt-8">
         <div className="max-w-[1400px] mx-auto p-4 bg-white shadow rounded">
           <div className="py-2 w-[100%] px-2 text-center">
-            <h1 className="text-2xl font-bold text-blackColor">
-              Mannam & Associates
-            </h1>
+            <h4 className="ml-1 md:text-2xl text-xl text-mainColor font-bold cursor-pointer">
+              Mannam & <span className="text-headingColor">Associates</span>
+            </h4>
           </div>
           {/* Side Menu */}
 

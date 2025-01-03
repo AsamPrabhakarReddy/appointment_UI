@@ -2,7 +2,8 @@ import React from "react";
 import Swal from "sweetalert2";
 import { MdArrowRightAlt } from "react-icons/md";
 import axios from "axios";
-const Review = ({ selectedSlot, formData, onEdit }) => {
+import success from "../assets/success.png"
+const Review = ({ selectedSlot, formData, onEdit,setSelectedIndex }) => {
   // Format the selected date
   const formattedDate = selectedSlot
     ? selectedSlot.date.toLocaleDateString("en-US", {
@@ -26,7 +27,7 @@ const Review = ({ selectedSlot, formData, onEdit }) => {
               // Prepare data for the API
               const requestData = {
                   selectedSlot: {
-                      date: selectedSlot.date.toISOString(), // Format as ISO string
+                      date: selectedSlot.date.toDateString(), // Format as ISO string
                       time: selectedSlot.time,
                   },
                   formData: {
@@ -41,18 +42,65 @@ const Review = ({ selectedSlot, formData, onEdit }) => {
               const response = await axios.post("https://appointment-backend-syyd.onrender.com/api/BookingSlot", requestData);
               
               // Handle success response
+              const style = document.createElement('style');
+              style.innerHTML = `
+                .swal-custom-ok-button {
+                  background-color: #0A3161; /* Custom color */
+                  color:#B31942;
+                  border: none;
+                  padding: 10px 20px;
+                  font-size: 16px;
+                  border-radius: 5px;
+                }
+
+                .swal-custom-ok-button:hover {
+                  background-color:rgb(69, 93, 122); /* Hover color */
+                }
+              `;
+              document.head.appendChild(style);
+
               if (response.status === 201) {
-                  Swal.fire({
-                      icon: "success",
-                      title: "Booking was successful",
-                      text: `Your slot is booked for : ${selectedSlot.date.toDateString()} at ${selectedSlot.time}.
-                      Name : ${formData.name}\n
-                      Email : ${formData.email}\n`,
-                  });
+                Swal.fire({
+
+                  html: `
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                      <!-- Logo and Title Section -->
+                      <div style="display: flex; text-align: left; margin-bottom: 20px;">
+                        <!-- Logo (Mannam & Associates) -->
+                        <h4 style="margin: 0; font-size: 1.5rem; font-weight: bold; color: #B31942; margin-right: 15px;">
+                          Mannam & <span style="color: #0A3161;">Associates</span>
+                        </h4>
+                      </div>
+                
+                      <!-- Success Image (Centered) -->
+                      <div>
+                        <img src="${success}" alt="Success" style="width: 60px; height: 60px; margin: 0 10px;" />
+                      </div>
+                
+                      <!-- Title (left-aligned) -->
+                      <div style="width: 100%; text-align: center; margin-bottom: 20px;">
+                        <h1 style="margin: 0; font-size: 30px;">Your Consultation is Confirmed</h1>
+                      </div>
+                    </div>
+                
+                    <!-- Appointment Details (Centered) -->
+                    <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                      <p>Your Consultation is Confirmed for: <strong>${selectedSlot.date.toDateString()} at ${selectedSlot.time}</strong></p>
+                      <p>Name: ${formData.name}</p>
+                      <p>Email: ${formData.email}</p>
+                    </div>
+                  `,
+                  customClass: {
+                    confirmButton: 'swal-custom-ok-button'
+                  }
+                });
+                
+      
+                  setSelectedIndex(0);
               } else {
                   Swal.fire({
                       icon: "warning",
-                      title: "Booking was successful",
+                      title: "Booking failed",
                       text: "Booking completed, but there was an unexpected response from the server.",
                   });
               }
