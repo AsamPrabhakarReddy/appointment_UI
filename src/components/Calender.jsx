@@ -8,7 +8,9 @@ const Calendar = ({ selectedSlot, onSlotSelect }) => {
   
   const fetchSlots = async () => {
     try {
-      const response = await axios.get('http://localhost:9090/api/getDateAndSlots');
+      // const response = await axios.get('http://localhost:9090/api/getDateAndSlots');
+      const response = await axios.get('https://appointment-backend-syyd.onrender.com/api/getDateAndSlots');
+      
       console.log("Data fetched successfully:", response.data);
       const { results, lastUpdated: newLastUpdated } = response.data;
       if (lastUpdated !== newLastUpdated) {
