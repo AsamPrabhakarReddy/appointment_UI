@@ -33,10 +33,10 @@ function App() {
         ) : (
           <Routes>
             <Route path="/" element={<Hero />} />
-            <Route path="/cancel-reschedule" element={<CancelOrReschedule />} />
+            <Route path="/cancel-reschedule/:appointmentId" element={<CancelOrReschedule />} />
           </Routes>
         )}
-      </BrowserRouter>
+      </BrowserRouter>  
     </>
   );
 }

@@ -1,6 +1,22 @@
 import React from 'react'
 import { MdArrowRightAlt } from "react-icons/md";
+import { useLocation,  } from 'react-router-dom';
 const CancelOrReschedule = () => {
+
+    // const location = useLocation();
+    // const [appointmentData, setAppointmentData] = useState(null);
+    // const appointmentId = new URLSearchParams(location.search).get("appointmentId");
+  
+    // useEffect(() => {
+    //   if (appointmentId) {
+    //     fetch(`https://yourbackend.com/api/appointments/${appointmentId}`)
+    //       .then((response) => response.json())
+    //       .then((data) => setAppointmentData(data))
+    //       .catch((error) => console.error('Error fetching appointment details:', error));
+    //   }
+    // }, [appointmentId]);
+
+    // console.log(appointmentData);
   return (
     <div className='w-full h-screen bg-gray-400 p-4'>
        <div className='bg-white shadow h-full lg:w-[600px] sm:w-[550px] md:[500px] w-[450px] mx-auto rounded p-2 '>
