@@ -4,6 +4,7 @@ import Lottie from "lottie-react";
 import Anime from "./assets/Home.json";
 import CancelOrReschedule from "./components/CancelOrReschedule";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -13,32 +14,29 @@ function App() {
 
   return (
     <>
-     <BrowserRouter>
-      {isLoading ? (
-        <div className="flex flex-col items-center justify-center h-screen">
-          <div className="flex flex-col space-x-2">
-            <Lottie
-              animationData={Anime}
-              loop={true}
-              className="w-full h-auto "
-            />
-            <div>
-              <h1 className="text-gray-600 font-medium">
-                You are being directed to Syndèo appointment scheduling
-                platform...
-              </h1>
+      <BrowserRouter>
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center h-screen">
+            <div className="flex flex-col space-x-2">
+              <Lottie
+                animationData={Anime}
+                loop={true}
+                className="w-full h-auto "
+              />
+              <div>
+                <h1 className="text-gray-600 font-medium">
+                  You are being directed to Syndèo appointment scheduling platform...
+                </h1>
+              </div>
             </div>
           </div>
-        </div>
-      ) : (
-        <Hero />
-      )}
-    
-   
-        <Routes>
-            <Route to="/cancel-reschedule" element={<CancelOrReschedule/>}/>
-        </Routes>
-    </BrowserRouter>
+        ) : (
+          <Routes>
+            <Route path="/" element={<Hero />} />
+            <Route path="/cancel-reschedule" element={<CancelOrReschedule />} />
+          </Routes>
+        )}
+      </BrowserRouter>
     </>
   );
 }
