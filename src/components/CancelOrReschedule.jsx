@@ -1,22 +1,51 @@
 import React from 'react'
 import { MdArrowRightAlt } from "react-icons/md";
-import { useLocation,  } from 'react-router-dom';
+import { useLocation, useNavigate,  } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const CancelOrReschedule = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [appointmentData, setAppointmentData] = useState(null);
+    const { appointmentId } = useParams();
+    console.log("id ", appointmentId);
+    useEffect(() => {
+        if (appointmentId) {
+            fetch('http://localhost:9090/api/getDataById',
+            // fetch('https://appointment-backend-syyd.onrender.com/api/getDataById',
+                {
+                method: 'POST',  
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    Id: appointmentId,  
+                }),
+            })
+            .then((response) => response.json())  
+            .then((data) => {
+                setAppointmentData(data);  
+            })
+            .catch((error) => {
+                console.error('Error fetching appointment details:', error);
+            });
+        }
+        
+    }, [appointmentId]);
 
-    // const location = useLocation();
-    // const [appointmentData, setAppointmentData] = useState(null);
-    // const appointmentId = new URLSearchParams(location.search).get("appointmentId");
-  
-    // useEffect(() => {
-    //   if (appointmentId) {
-    //     fetch(`https://yourbackend.com/api/appointments/${appointmentId}`)
-    //       .then((response) => response.json())
-    //       .then((data) => setAppointmentData(data))
-    //       .catch((error) => console.error('Error fetching appointment details:', error));
-    //   }
-    // }, [appointmentId]);
+      // Check if appointmentData is null or undefined
+      if (!appointmentData) {
+        return <div className='w-full h-screen bg-gray-400 p-4'>Loading...</div>;
+    }
 
-    // console.log(appointmentData);
+
+    console.log(appointmentData);
+
+    const handleCancel = () => {
+        navigate(`/cancel/${appointmentId}`);  
+    }
+
   return (
     <div className='w-full h-screen bg-gray-400 p-4'>
        <div className='bg-white shadow h-full lg:w-[600px] sm:w-[550px] md:[500px] w-[450px] mx-auto rounded p-2 '>
@@ -28,8 +57,12 @@ const CancelOrReschedule = () => {
                 </div>
 
                 <div className='flex gap-8'>
-                    <button className="bg-primaryColor lg:px-6 px-4 py-2 rounded text-white md:text-base text-sm">Reschedule</button>
-                    <button className="bg-primaryColor lg:px-6 px-4 py-2 rounded text-white md:text-base text-sm">Cancel</button>
+                    <button
+        
+                    className="bg-primaryColor lg:px-6 px-4 py-2 rounded text-white md:text-base text-sm">Reschedule</button>
+                    <button 
+                        onClick={handleCancel}
+                    className="bg-primaryColor lg:px-6 px-4 py-2 rounded text-white md:text-base text-sm">Cancel</button>
                 </div>
 
                 <div className="flex flex-col w-full p-2">
@@ -44,9 +77,7 @@ const CancelOrReschedule = () => {
                     <div className="">
                         <input
                             type="text"
-                            // value={
-                            // formattedDate ? `${formattedDate} at ${selectedSlot.time}` : ""
-                            // }
+                            value={appointmentData.date + " At "+ appointmentData.time}
                             readOnly
                             className="bg-white shadow p-3 rounded focus:outline-none w-full md:text-base text-sm"
                             placeholder="Select a date and time"
@@ -62,7 +93,7 @@ const CancelOrReschedule = () => {
                     </label>
                     <input
                         type="text"
-                        // value={service}
+                        value={appointmentData.service}
                         readOnly
                         // onChange={handleServiceChange}  
                         // onFocus={(e) => e.target.select()} 
@@ -80,7 +111,7 @@ const CancelOrReschedule = () => {
                     </label>
                     <input
                     type="text"
-                    // value=""
+                    value={appointmentData.staffMember}
                     readOnly
                     className="bg-white shadow p-3 rounded focus:outline-none w-full md:text-base text-sm"
                     placeholder="Mannam & Associates, LLC [Attorney / Paralegal]"
@@ -95,7 +126,7 @@ const CancelOrReschedule = () => {
                     </label>
                     <input
                         type="text"
-                        // value={formData.name}
+                        value={appointmentData.name}
                         readOnly
                         className="bg-white shadow p-3 rounded focus:outline-none w-full md:text-base text-sm"
                         placeholder="Name"
@@ -112,7 +143,7 @@ const CancelOrReschedule = () => {
                     <div className="relative">
                     <input
                         type="email"
-                        // value={formData.email}
+                        value={appointmentData.email}
                         readOnly
                         className="bg-white shadow p-3 rounded focus:outline-none w-full md:text-base text-sm"
                         placeholder="Email"

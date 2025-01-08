@@ -1,8 +1,83 @@
 import React from 'react'
 import { TiArrowRight } from "react-icons/ti";
 import { TiArrowLeft } from "react-icons/ti";
-
+import { useLocation, useNavigate,  } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import axios from 'axios';
 const Cancel = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [appointmentData, setAppointmentData] = useState(null);
+    const { appointmentId } = useParams();
+    console.log("id ", appointmentId);
+    useEffect(() => {
+        if (appointmentId) {
+            fetch('http://localhost:9090/api/getDataById',
+            // fetch('https://appointment-backend-syyd.onrender.com/api/getDataById',
+                {
+                method: 'POST',  
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    Id: appointmentId,  
+                }),
+            })
+            .then((response) => response.json())  
+            .then((data) => {
+                setAppointmentData(data);  
+            })
+            .catch((error) => {
+                console.error('Error fetching appointment details:', error);
+            });
+        }
+        
+    }, [appointmentId]);
+
+      // Check if appointmentData is null or undefined
+      if (!appointmentData) {
+        return <div className='w-full h-screen bg-gray-400 p-4'>Loading...</div>;
+    }
+
+
+    console.log(appointmentData);
+
+    const handleCancelClick = () => {
+       
+        fetch('http://localhost:9090/api/deleteAppointment',
+            // fetch('https://appointment-backend-syyd.onrender.com/api/deleteAppointment',
+                {
+                method: 'POST',  
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    Id: appointmentId,  
+                }),
+            })
+            .then((response) => {
+                Swal.fire(
+                    {
+                        icon: 'success',
+                        title: 'success',
+                        text:'Appointment Canceled Successfully'
+                    }
+                )
+                navigate('/');  
+            })
+            .catch((error) => {
+                console.error('Error deleting appointment:', error);
+                Swal.fire({
+                    icon:'error',
+                    title:'error',
+                    text:'Error while deleting'
+                })
+            });
+    };
+
   return (
     <div className='w-full h-screen bg-gray-400 p-4'>
            <div className='bg-white shadow h-full lg:w-[600px] sm:w-[550px] md:[500px] w-[450px] mx-auto rounded p-2 '>
@@ -25,7 +100,7 @@ const Cancel = () => {
                         </label>
                         <input
                             type="text"
-                            // value={service}
+                            value={appointmentData.service}
                             readOnly
                             // onChange={handleServiceChange}  
                             // onFocus={(e) => e.target.select()} 
@@ -43,7 +118,7 @@ const Cancel = () => {
                         </label>
                         <input
                         type="text"
-                        // value=""
+                        value={appointmentData.staffMember}
                         readOnly
                         className="bg-white shadow p-3 rounded focus:outline-none w-full md:text-base text-sm"
                         placeholder="Mannam & Associates, LLC [Attorney / Paralegal]"
@@ -62,9 +137,7 @@ const Cancel = () => {
                         <div className="">
                             <input
                                 type="text"
-                                // value={
-                                // formattedDate ? `${formattedDate} at ${selectedSlot.time}` : ""
-                                // }
+                                value={appointmentData.date + " At " + appointmentData.time}
                                 readOnly
                                 className="bg-white shadow p-3 rounded focus:outline-none w-full md:text-base text-sm"
                                 placeholder="Select a date and time"
@@ -88,15 +161,16 @@ const Cancel = () => {
                            className="px-6 py-2 flex flex-row items-center justify-center bg-primaryColor text-white rounded lg:w-1/3 "
                         >
                             <TiArrowLeft className="mr-2 text-2xl" />
-                            Summary 
+                             
+                            Summary
                         </button>
                         <button 
-                            // onClick={handleSubmit}    
+                            onClick={handleCancelClick}    
                            className="px-6 py-2 flex flex-row items-center justify-center bg-primaryColor text-white rounded lg:w-1/3"
                         >
-                            Cancel 
+                            Cancel
                           <TiArrowRight className="ml-2 text-2xl"/>
-                        </button>
+                        </button>   
                     </div>
     
                 </div>

@@ -3,7 +3,9 @@ import { useState } from "react";
 import Lottie from "lottie-react";
 import Anime from "./assets/Home.json";
 import CancelOrReschedule from "./components/CancelOrReschedule";
+import Calendar from "./components/Calender";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Cancel from "./components/Cancel";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -34,6 +36,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Hero />} />
             <Route path="/cancel-reschedule/:appointmentId" element={<CancelOrReschedule />} />
+            <Route path="/cancel/:appointmentId" element={<Cancel />} />
           </Routes>
         )}
       </BrowserRouter>  
