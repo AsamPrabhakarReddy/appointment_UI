@@ -2,7 +2,8 @@ import Hero from "./components/Hero";
 import { useState } from "react";
 import Lottie from "lottie-react";
 import Anime from "./assets/Home.json";
-
+import CancelOrReschedule from "./components/CancelOrReschedule";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -12,6 +13,7 @@ function App() {
 
   return (
     <>
+     <BrowserRouter>
       {isLoading ? (
         <div className="flex flex-col items-center justify-center h-screen">
           <div className="flex flex-col space-x-2">
@@ -31,6 +33,12 @@ function App() {
       ) : (
         <Hero />
       )}
+    
+   
+        <Routes>
+            <Route to="/cancel-reschedule" element={<CancelOrReschedule/>}/>
+        </Routes>
+    </BrowserRouter>
     </>
   );
 }

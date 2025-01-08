@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { MdArrowRightAlt } from "react-icons/md";
 import axios from "axios";
 import success from "../assets/success.png"
 const Review = ({ selectedSlot, formData, onEdit,setSelectedIndex }) => {
+
+  const [serviceFlag, setServiceFlag] = useState(false);
+  const [service, setService] = useState("Immigration Consultation 1 hour");
+  const [staffMember, setStaffMember] = useState("Mannam & Associates, LLC [Attorney / Paralegal]");
+  const handleServiceFlag = () => {
+    setServiceFlag(!serviceFlag);
+  };
+
+  const handleServiceChange = (e) => {
+    setService(e.target.value);
+  };
+
+
   // Format the selected date
   const formattedDate = selectedSlot
     ? selectedSlot.date.toLocaleDateString("en-US", {
@@ -14,9 +27,9 @@ const Review = ({ selectedSlot, formData, onEdit,setSelectedIndex }) => {
       })
     : "";
 
-    const handleSubmit = async (e)=>{
+    const handleSubmit = async (e) => {
       e.preventDefault();
-      // console.log("final submit data :", data);
+  
       if (
           formData.name !== "" &&
           formData.email !== "" &&
@@ -24,78 +37,63 @@ const Review = ({ selectedSlot, formData, onEdit,setSelectedIndex }) => {
           selectedSlot.time !== ""
       ) {
           try {
-              // Prepare data for the API
+              // conversion from local time to utc time
+              const localDate = new Date(selectedSlot.date); 
+              const utcDate = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000).toISOString(); 
+
               const requestData = {
                   selectedSlot: {
-                      date: selectedSlot.date.toDateString(), // Format as ISO string
+                      date: utcDate, 
                       time: selectedSlot.time,
                   },
                   formData: {
                       name: formData.name,
                       email: formData.email,
                   },
+                  service,
+                  staffMember
               };
   
+              console.log("Request Data:", requestData);
+  
               // Make POST request
-              // const response = await axios.post("http://localhost:9090/api/BookingSlot", requestData);
-              
-              const response = await axios.post("https://appointment-backend-syyd.onrender.com/api/BookingSlot", requestData);
-              
+              const response = await axios.post("http://localhost:9090/api/BookingSlot", requestData);
+  
               // Handle success response
-              const style = document.createElement('style');
-              style.innerHTML = `
-                .swal-custom-ok-button {
-                  background-color: #0A3161; /* Custom color */
-                  color:#B31942;
-                  border: none;
-                  padding: 10px 20px;
-                  font-size: 16px;
-                  border-radius: 5px;
-                }
-
-                .swal-custom-ok-button:hover {
-                  background-color:rgb(69, 93, 122); /* Hover color */
-                }
-              `;
-              document.head.appendChild(style);
-
               if (response.status === 201) {
-                Swal.fire({
-
-                  html: `
-                    <div style="display: flex; flex-direction: column; align-items: center;">
-                      <!-- Logo and Title Section -->
-                      <div style="display: flex; text-align: left; margin-bottom: 20px;">
-                        <!-- Logo (Mannam & Associates) -->
-                        <h4 style="margin: 0; font-size: 1.5rem; font-weight: bold; color: #B31942; margin-right: 15px;">
-                          Mannam & <span style="color: #0A3161;">Associates</span>
-                        </h4>
-                      </div>
-                
-                      <!-- Success Image (Centered) -->
-                      <div>
-                        <img src="${success}" alt="Success" style="width: 60px; height: 60px; margin: 0 10px;" />
-                      </div>
-                
-                      <!-- Title (left-aligned) -->
-                      <div style="width: 100%; text-align: center; margin-bottom: 20px;">
-                        <h1 style="margin: 0; font-size: 30px;">Your Consultation is Confirmed</h1>
-                      </div>
-                    </div>
-                
-                    <!-- Appointment Details (Centered) -->
-                    <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                      <p>Your Consultation is Confirmed for: <strong>${selectedSlot.date.toDateString()} at ${selectedSlot.time}</strong></p>
-                      <p>Name: ${formData.name}</p>
-                      <p>Email: ${formData.email}</p>
-                    </div>
-                  `,
-                  customClass: {
-                    confirmButton: 'swal-custom-ok-button'
-                  }
-                });
-                
-      
+                  Swal.fire({
+                      html: `
+                          <div style="display: flex; flex-direction: column; align-items: center;">
+                            <!-- Logo and Title Section -->
+                            <div style="display: flex; text-align: left; margin-bottom: 20px;">
+                              <h4 style="margin: 0; font-size: 1.5rem; font-weight: bold; color: #B31942; margin-right: 15px;">
+                                Mannam & <span style="color: #0A3161;">Associates</span>
+                              </h4>
+                            </div>
+  
+                            <!-- Success Image (Centered) -->
+                            <div>
+                              <img src="${success}" alt="Success" style="width: 60px; height: 60px; margin: 0 10px;" />
+                            </div>
+  
+                            <!-- Title (left-aligned) -->
+                            <div style="width: 100%; text-align: center; margin-bottom: 20px;">
+                              <h1 style="margin: 0; font-size: 30px;">Your Consultation is Confirmed</h1>
+                            </div>
+                          </div>
+  
+                          <!-- Appointment Details (Centered) -->
+                          <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                            <p>Your Consultation is Confirmed for: <strong>${selectedSlot.date.toDateString()} at ${selectedSlot.time}</strong></p>
+                            <p>Name: ${formData.name}</p>
+                            <p>Email: ${formData.email}</p>
+                          </div>
+                      `,
+                      customClass: {
+                          confirmButton: 'swal-custom-ok-button'
+                      }
+                  });
+  
                   setSelectedIndex(0);
               } else {
                   Swal.fire({
@@ -119,8 +117,11 @@ const Review = ({ selectedSlot, formData, onEdit,setSelectedIndex }) => {
               text: "Please fill out all required fields!",
           });
       }
-      
-    }
+  }
+  
+
+   
+
   return (
     <div className="flex flex-col items-center bg-gray-100 p-4 rounded">
       <div className="md:text-3xl text-2xl font-bold text-primaryColor mb-4 text-center tracking-tight">
@@ -158,17 +159,28 @@ const Review = ({ selectedSlot, formData, onEdit,setSelectedIndex }) => {
 
       {/* Service */}
       <div className="flex flex-col w-full p-2">
-        <label className="md:text-lg text-sm text-blackColor font-semibold">
-          Service
-        </label>
-        <input
-          type="text"
-          value="Immigration Consultation 1 hour"
-          readOnly
-          className="bg-white shadow p-3 rounded focus:outline-none w-full md:text-base text-sm"
-          placeholder="Immigration Consultation 1 hour"
-        />
+        <div className="relative">
+          <label className="md:text-lg text-sm text-blackColor font-semibold">
+            Service
+          </label>
+          <input
+            type="text"
+            value={service}
+            readOnly={!serviceFlag}  
+            onChange={handleServiceChange}  
+            onFocus={(e) => e.target.select()} 
+            className={`bg-white shadow p-3 rounded focus:outline-none w-full  md:text-base text-sm ${serviceFlag ? "border-2 border-gray-600 shadow-lg " : ""}`}
+            placeholder="Immigration Consultation 1 hour"
+          />
+          <button
+            onClick={() => handleServiceFlag()}  
+            className="absolute right-2 top-1/2 transform -translate-y-1/5 bg-primaryColor text-white text-sm rounded p-1 w-[60px]"
+          >
+            {serviceFlag ? "Save" : "Edit"}
+          </button>
+        </div>
       </div>
+
 
       {/* Staff Member */}
       <div className="flex flex-col w-full p-2">

@@ -3,7 +3,8 @@ import Calendar from "./Calender";
 import Information from "./Information";
 import Review from "./Review";
 import Swal from "sweetalert2";
-
+import CancelOrReschedule from "./CancelOrReschedule";
+import Cancel from "./Cancel";
 const Hero = () => {
   const sections = [
     { id: 0, title: "Date & Time" },
@@ -104,6 +105,7 @@ const Hero = () => {
       {/* Main Content */}
 
       <div className="lg:pt-8">
+
         <div className="max-w-[1400px] mx-auto p-4 bg-white shadow rounded">
           <div className="py-2 w-[100%] px-2 text-center">
             <h4 className="ml-1 md:text-2xl text-xl text-mainColor font-bold cursor-pointer">
@@ -159,6 +161,8 @@ const Hero = () => {
           </h1>
         </div>
       </div>
+       {/* <CancelOrReschedule/>
+       <Cancel/> */}
     </div>
   );
 };
