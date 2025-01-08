@@ -15,8 +15,8 @@ const Cancel = () => {
     console.log("id ", appointmentId);
     useEffect(() => {
         if (appointmentId) {
-            fetch('http://localhost:9090/api/getDataById',
-            // fetch('https://appointment-backend-syyd.onrender.com/api/getDataById',
+            // fetch('http://localhost:9090/api/getDataById',
+            fetch('https://appointment-backend-syyd.onrender.com/api/getDataById',
                 {
                 method: 'POST',  
                 headers: {
@@ -47,8 +47,8 @@ const Cancel = () => {
 
     const handleCancelClick = () => {
        
-        fetch('http://localhost:9090/api/deleteAppointment',
-            // fetch('https://appointment-backend-syyd.onrender.com/api/deleteAppointment',
+        // fetch('http://localhost:9090/api/deleteAppointment',
+            fetch('https://appointment-backend-syyd.onrender.com/api/deleteAppointment',
                 {
                 method: 'POST',  
                 headers: {
