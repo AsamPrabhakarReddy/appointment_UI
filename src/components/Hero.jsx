@@ -5,6 +5,7 @@ import Review from "./Review";
 import Swal from "sweetalert2";
 import CancelOrReschedule from "./CancelOrReschedule";
 import Cancel from "./Cancel";
+import Reschedule from "./Reschedule";
 const Hero = () => {
   const sections = [
     { id: 0, title: "Date & Time" },
