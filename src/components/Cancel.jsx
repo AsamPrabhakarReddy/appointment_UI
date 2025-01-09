@@ -94,7 +94,7 @@ const Cancel = () => {
       
                                 <!-- Title (left-aligned) -->
                                 <div style="width: 100%; text-align: center; margin-bottom: 20px;">
-                                  <h1 style="margin: 0; font-size: 25px;">Your Consultation Cancelled Successfulyl</h1>
+                                  <h1 style="margin: 0; font-size: 25px;">Your Consultation Cancelled Successfully</h1>
                                 </div>
                               </div>
       
