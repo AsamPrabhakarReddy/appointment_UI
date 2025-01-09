@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { TiArrowLeft, TiArrowRight } from "react-icons/ti";
 import { useParams, useNavigate } from "react-router-dom";
-
+import Swal from "sweetalert2";
 const Reschedule = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [slotsData, setSlotsData] = useState([]);
@@ -139,12 +139,99 @@ const Reschedule = () => {
   }
   console.log("old data : ", appointmentData);
 
-  const handleSelectedSlot = () => {
-    if (selectedSlot) {
-      alert(`You selected: ${selectedSlot.date.toDateString()} at ${selectedSlot.time}`);
-      alert(`You selected: ${appointmentData.date} at ${appointmentData.time}`);
+    const handleUpdateAppointment = ()=>{
+        alert('Clicked on update Appoinment');
     }
-  };
+
+    const handleCloseModel = ()=>{
+        navigate(`reschedule/${appointmentId}`);
+    }
+
+  const handleSelectedSlot = () => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      .swal-custom-submit-button {
+        background-color: #0A3161; /* Custom color */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+      }
+
+      .swal-custom-submit-button:hover {
+        background-color: rgb(69, 93, 122); /* Hover color */
+      }
+
+      .swal-custom-go-back-button {
+        background-color: #FF5733; /* Go back button color */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+      }
+
+      .swal-custom-go-back-button:hover {
+        background-color: rgb(238, 90, 45); /* Hover color */
+      }
+
+      .swal-button-container {
+        display: flex;
+        justify-content: space-between;
+      }
+    `;
+    document.head.appendChild(style);
+
+    if (selectedSlot) {
+        // Displaying selected slot details inside Swal modal
+        Swal.fire({
+            html: `
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <!-- Logo and Title Section -->
+                    <div style="display: flex; text-align: left; margin-bottom: 20px;">
+                        <h4 style="margin: 0; font-size: 1.5rem; font-weight: bold; color: #B31942; margin-right: 15px;">
+                            Mannam & <span style="color: #0A3161;">Associates</span>
+                        </h4>
+                    </div>
+                    <!-- Title (left-aligned) -->
+                    <div style="width: 100%; text-align: center; margin-bottom: 20px;">
+                        <h1 style="margin: 0; font-size: 25px;">Your Consultation Rescheduled Successfully</h1>
+                    </div>
+                    <!-- Selected Slot Information -->
+                    <div style="margin-bottom: 20px;">
+                        <p style="font-size: 18px;">Your Old Appointment Details:</p>
+                        <p style="font-size: 16px; color: #555;">Date: ${selectedSlot.date.toDateString()}</p>
+                        <p style="font-size: 16px; color: #555;">Time: ${selectedSlot.time}</p>
+                    </div>
+                    <!-- Appointment Data -->
+                    <div style="margin-bottom: 20px;">
+                        <p style="font-size: 18px;">Your New Appointment Details:</p>
+                        <p style="font-size: 16px; color: #555;">Date: ${appointmentData.date.toDateString()}</p>
+                        <p style="font-size: 16px; color: #555;">Time: ${appointmentData.time}</p>
+                    </div>
+                </div>
+            `,
+            customClass: {
+                confirmButton: 'swal-custom-submit-button',
+                cancelButton: 'swal-custom-go-back-button',
+                buttonContainer: 'swal-button-container',
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            cancelButtonText: 'Go Back',
+            preConfirm: () => {
+              
+                handleUpdateAppointment();
+            },
+            
+            cancelButtonAriaLabel: 'Go Back',
+            didClose: () => {
+                handleCloseModel();
+            }
+        });
+    }
+};
 
 
   return (
