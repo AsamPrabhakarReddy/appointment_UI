@@ -116,9 +116,7 @@ const Cancel = () => {
             });
     };
 
-    handleSummaryClick = ()=>{
-        navigate(`/cancel-reschedule/${appointmentId}`)
-    }
+    
 
   return (
     <div className='w-full h-screen bg-gray-400 p-4'>
@@ -199,7 +197,7 @@ const Cancel = () => {
     
                     <div className="flex justify-between w-[100%] p-4">
                         <button 
-                            onClick={handleSummaryClick}    
+                            // onClick={handleSummaryClick}    
                            className="px-6 py-2 flex flex-row items-center justify-center bg-primaryColor text-white rounded lg:w-1/3 "
                         >
                             <TiArrowLeft className="mr-2 text-2xl" />
