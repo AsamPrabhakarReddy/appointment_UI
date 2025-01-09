@@ -12,8 +12,8 @@ const CancelOrReschedule = () => {
     console.log("id ", appointmentId);
     useEffect(() => {
         if (appointmentId) {
-            // fetch('http://localhost:9090/api/getDataById',
-            fetch('https://appointment-backend-syyd.onrender.com/api/getDataById',
+            fetch('http://localhost:9090/api/getDataById',
+            // fetch('https://appointment-backend-syyd.onrender.com/api/getDataById',
                 {
                 method: 'POST',  
                 headers: {
@@ -49,6 +49,9 @@ const CancelOrReschedule = () => {
     const handleBookAnother = () => {
         navigate('/');  
     }
+    const handleReschedule = ()=>{
+        navigate(`/reschedule/${appointmentId}`)
+    }
 
   return (
     <div className='w-full h-screen bg-gray-400 p-4'>
@@ -62,7 +65,7 @@ const CancelOrReschedule = () => {
 
                 <div className='flex gap-8'>
                     <button
-        
+                        onClick={handleReschedule}
                     className="bg-primaryColor lg:px-6 px-4 py-2 rounded text-white md:text-base text-sm">Reschedule</button>
                     <button 
                         onClick={handleCancel}

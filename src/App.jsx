@@ -6,6 +6,7 @@ import CancelOrReschedule from "./components/CancelOrReschedule";
 import Calendar from "./components/Calender";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Cancel from "./components/Cancel";
+import Reschedule from "./components/Reschedule";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,6 +38,7 @@ function App() {
             <Route path="/" element={<Hero />} />
             <Route path="/cancel-reschedule/:appointmentId" element={<CancelOrReschedule />} />
             <Route path="/cancel/:appointmentId" element={<Cancel />} />
+            <Route path="/reschedule/:appointmentId" element={<Reschedule />} />
           </Routes>
         )}
       </BrowserRouter>  
