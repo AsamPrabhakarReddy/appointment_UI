@@ -46,6 +46,10 @@ const CancelOrReschedule = () => {
         navigate(`/cancel/${appointmentId}`);  
     }
 
+    const handleBookAnother = () => {
+        navigate('/');  
+    }
+
   return (
     <div className='w-full h-screen bg-gray-400 p-4'>
        <div className='bg-white shadow h-full lg:w-[600px] sm:w-[550px] md:[500px] w-[450px] mx-auto rounded p-2 '>
@@ -154,7 +158,7 @@ const CancelOrReschedule = () => {
 
                 <div className="flex justify-center w-[100%] p-4">
                     <button 
-                        // onClick={handleSubmit}    
+                        onClick={handleBookAnother}    
                        className="px-6 py-2 flex flex-row items-center justify-center bg-primaryColor text-white rounded lg:w-2/4 w-full"
                     >
                         Book Another 
