@@ -139,12 +139,76 @@ const Reschedule = () => {
   }
   console.log("old data : ", appointmentData);
 
-    const handleUpdateAppointment = ()=>{
-        alert('Clicked on update Appoinment');
+  const handleUpdateAppointment = () => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      .swal-custom-ok-button {
+        background-color: #0A3161; /* Custom color */
+        color:white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+      }
+
+      .swal-custom-ok-button:hover {
+        background-color:rgb(69, 93, 122); /* Hover color */
+      }
+    `;
+    document.head.appendChild(style);
+    if (!appointmentId || !selectedSlot) {
+        alert('Appointment ID or selected slot is missing!');
+        return;
     }
+    const data = {
+        appointmentId, 
+        newDate: selectedSlot.date,
+        newTime: selectedSlot.time 
+    };
+    // axios.post("http://localhost:9090/api/updateAppointment", data)
+    axios.post("https://appointment-backend-syyd.onrender.com/api/updateAppointment", data)
+        .then((response) => {
+            if (response.status === 200) {
+                Swal.fire({
+                                         html: `
+                                             <div style="display: flex; flex-direction: column; align-items: center;">
+                                               <!-- Logo and Title Section -->
+                                               <div style="display: flex; text-align: left; margin-bottom: 20px;">
+                                                 <h4 style="margin: 0; font-size: 1.5rem; font-weight: bold; color: #B31942; margin-right: 15px;">
+                                                   Mannam & <span style="color: #0A3161;">Associates</span>
+                                                 </h4>
+                                               </div>
+                     
+                                               <!-- Success Image (Centered) -->
+                                               <div>
+                                                 <img src="${success}" alt="Success" style="width: 60px; height: 60px; margin: 0 10px;" />
+                                               </div>
+                     
+                                               <!-- Title (left-aligned) -->
+                                               <div style="width: 100%; text-align: center; margin-bottom: 20px;">
+                                                 <h1 style="margin: 0; font-size: 25px;">Your Consultation Updated Successfulyl</h1>
+                                               </div>
+                                             </div>
+                     
+                                           
+                                         `,
+                                         customClass: {
+                                             confirmButton: 'swal-custom-ok-button'
+                                         }
+                                   });
+                // Optionally redirect or update the UI
+            } else {
+                alert('Failed to update appointment');
+            }
+        })
+        .catch((error) => {
+            console.error("Error updating appointment:", error);
+            alert('Error updating appointment');
+        });
+};
 
     const handleCloseModel = ()=>{
-        navigate(`reschedule/${appointmentId}`);
+        navigate(-1);
     }
 
   const handleSelectedSlot = () => {
@@ -164,7 +228,7 @@ const Reschedule = () => {
       }
 
       .swal-custom-go-back-button {
-        background-color: #FF5733; /* Go back button color */
+        background-color: #AE275F; /* Go back button color */
         color: white;
         border: none;
         padding: 10px 20px;
@@ -173,7 +237,7 @@ const Reschedule = () => {
       }
 
       .swal-custom-go-back-button:hover {
-        background-color: rgb(238, 90, 45); /* Hover color */
+        background-color:rgb(220, 11, 102); /* Hover color */
       }
 
       .swal-button-container {
@@ -207,19 +271,19 @@ const Reschedule = () => {
                     <!-- Appointment Data -->
                     <div style="margin-bottom: 20px;">
                         <p style="font-size: 18px;">Your New Appointment Details:</p>
-                        <p style="font-size: 16px; color: #555;">Date: ${appointmentData.date.toDateString()}</p>
+                        <p style="font-size: 16px; color: #555;">Date: ${appointmentData.date}</p>
                         <p style="font-size: 16px; color: #555;">Time: ${appointmentData.time}</p>
                     </div>
                 </div>
             `,
             customClass: {
-                confirmButton: 'swal-custom-submit-button',
                 cancelButton: 'swal-custom-go-back-button',
+                confirmButton: 'swal-custom-submit-button',
                 buttonContainer: 'swal-button-container',
             },
             showCancelButton: true,
-            confirmButtonText: 'Submit',
             cancelButtonText: 'Go Back',
+            confirmButtonText: 'Submit',
             preConfirm: () => {
               
                 handleUpdateAppointment();
