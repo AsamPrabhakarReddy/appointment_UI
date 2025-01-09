@@ -1,5 +1,8 @@
 import React from 'react'
 import Calendar from './Calender'
+import { TiArrowRight } from "react-icons/ti";
+import { TiArrowLeft } from "react-icons/ti";
+
 const Reschedule = () => {
 
     const handleSummaryClick = ()=>{
