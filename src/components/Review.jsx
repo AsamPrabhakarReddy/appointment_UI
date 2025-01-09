@@ -61,6 +61,24 @@ const Review = ({ selectedSlot, formData, onEdit,setSelectedIndex }) => {
               const response = await axios.post("https://appointment-backend-syyd.onrender.com/api/BookingSlot", requestData);
               
               // Handle success response
+              const style = document.createElement('style');
+              style.innerHTML = `
+                .swal-custom-ok-button {
+                  background-color: #0A3161; /* Custom color */
+                  color:white;
+                  border: none;
+                  padding: 10px 20px;
+                  font-size: 16px;
+                  border-radius: 5px;
+                }
+
+                .swal-custom-ok-button:hover {
+                  background-color:rgb(69, 93, 122); /* Hover color */
+                }
+              `;
+              document.head.appendChild(style);
+
+              // Handle success response
               if (response.status === 201) {
                   Swal.fire({
                       html: `

@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import success from "../assets/success.png"
 import axios from 'axios';
 const Cancel = () => {
     const navigate = useNavigate();
@@ -46,7 +47,24 @@ const Cancel = () => {
     console.log(appointmentData);
 
     const handleCancelClick = () => {
-       
+         // Handle success response
+         const style = document.createElement('style');
+         style.innerHTML = `
+           .swal-custom-ok-button {
+             background-color: #0A3161; /* Custom color */
+             color:white;
+             border: none;
+             padding: 10px 20px;
+             font-size: 16px;
+             border-radius: 5px;
+           }
+
+           .swal-custom-ok-button:hover {
+             background-color:rgb(69, 93, 122); /* Hover color */
+           }
+         `;
+         document.head.appendChild(style);
+        
         // fetch('http://localhost:9090/api/deleteAppointment',
             fetch('https://appointment-backend-syyd.onrender.com/api/deleteAppointment',
                 {
@@ -59,13 +77,33 @@ const Cancel = () => {
                 }),
             })
             .then((response) => {
-                Swal.fire(
-                    {
-                        icon: 'success',
-                        title: 'success',
-                        text:'Appointment Canceled Successfully'
-                    }
-                )
+                Swal.fire({
+                          html: `
+                              <div style="display: flex; flex-direction: column; align-items: center;">
+                                <!-- Logo and Title Section -->
+                                <div style="display: flex; text-align: left; margin-bottom: 20px;">
+                                  <h4 style="margin: 0; font-size: 1.5rem; font-weight: bold; color: #B31942; margin-right: 15px;">
+                                    Mannam & <span style="color: #0A3161;">Associates</span>
+                                  </h4>
+                                </div>
+      
+                                <!-- Success Image (Centered) -->
+                                <div>
+                                  <img src="${success}" alt="Success" style="width: 60px; height: 60px; margin: 0 10px;" />
+                                </div>
+      
+                                <!-- Title (left-aligned) -->
+                                <div style="width: 100%; text-align: center; margin-bottom: 20px;">
+                                  <h1 style="margin: 0; font-size: 30px;">Your Consultation Cancelled Successfull</h1>
+                                </div>
+                              </div>
+      
+                            
+                          `,
+                          customClass: {
+                              confirmButton: 'swal-custom-ok-button'
+                          }
+                    });
                 navigate('/');  
             })
             .catch((error) => {
