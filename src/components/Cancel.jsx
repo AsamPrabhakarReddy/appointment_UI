@@ -121,7 +121,7 @@ const Cancel = () => {
     }
 
   return (
-    <div className='w-full h-screen bg-gray-400 p-4'>
+    <div className='w-full h-auto bg-gray-400 p-4'>
            <div className='bg-white shadow h-full lg:w-[600px] sm:w-[550px] md:[500px] w-[450px] mx-auto rounded p-2 '>
                 <div className="flex flex-col items-center p-4 rounded space-y-4">
                     <div className="md:text-3xl text-2xl font-bold text-primaryColor mb-4 text-center tracking-tight">

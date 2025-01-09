@@ -296,7 +296,7 @@ const Reschedule = () => {
                     <!-- Selected Slot Information -->
                     <div style="margin-bottom: 20px;">
                         <p style="font-size: 18px; font-weight: bold;">Your New Appointment Details:</p>
-                        <p style="font-size: 16px; color: #555;">Date: ${selectedSlot.date.toDateString()}</p>
+                        <p style="font-size: 16px; color: #555;">Date: ${selectedSlot.date}</p>
                         <p style="font-size: 16px; color: #555;">Time: ${selectedSlot.time}</p>
                     </div>
                     
