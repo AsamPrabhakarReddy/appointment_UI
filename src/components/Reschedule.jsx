@@ -290,31 +290,15 @@ const Reschedule = () => {
                     <!-- Appointment Data -->
                     <div style="margin-bottom: 20px;">
                         <p style="font-size: 18px; font-weight: bold;">Your Old Appointment Details:</p>
-                        <p style="font-size: 16px; color: #555;">
-                            Date: {new Date(appointmentData.date).toLocaleDateString('en-US', {
-                                weekday: 'long',
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                            })}
-                        </p>
-                        <p style="font-size: 16px; color: #555;">Time: {appointmentData.time}</p>
+                        <p style="font-size: 16px; color: #555;">Date: ${appointmentData.date.toDateString()}</p>
+                        <p style="font-size: 16px; color: #555;">Time: ${appointmentData.time}</p>
                     </div>
-
                     <!-- Selected Slot Information -->
                     <div style="margin-bottom: 20px;">
                         <p style="font-size: 18px; font-weight: bold;">Your New Appointment Details:</p>
-                        <p style="font-size: 16px; color: #555;">
-                            Date: {new Date(selectedSlot.date).toLocaleDateString('en-US', {
-                                weekday: 'long',
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                            })}
-                        </p>
-                        <p style="font-size: 16px; color: #555;">Time: {selectedSlot.time}</p>
+                        <p style="font-size: 16px; color: #555;">Date: ${selectedSlot.date.toDateString()}</p>
+                        <p style="font-size: 16px; color: #555;">Time: ${selectedSlot.time}</p>
                     </div>
-
                     
                 </div>
             `,
