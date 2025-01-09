@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { TiArrowLeft, TiArrowRight } from "react-icons/ti";
 import { useParams, useNavigate } from "react-router-dom";
+import success from "../assets/success.png"
 import Swal from "sweetalert2";
 const Reschedule = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -162,7 +163,7 @@ const Reschedule = () => {
     }
     const data = {
         appointmentId, 
-        newDate: selectedSlot.date,
+        newDate: selectedSlot.date.toDateString(),
         newTime: selectedSlot.time 
     };
     // axios.post("http://localhost:9090/api/updateAppointment", data)
@@ -186,7 +187,7 @@ const Reschedule = () => {
                      
                                                <!-- Title (left-aligned) -->
                                                <div style="width: 100%; text-align: center; margin-bottom: 20px;">
-                                                 <h1 style="margin: 0; font-size: 25px;">Your Consultation Updated Successfulyl</h1>
+                                                 <h1 style="margin: 0; font-size: 25px;">Your Consultation Updated Successfully</h1>
                                                </div>
                                              </div>
                      
@@ -203,7 +204,34 @@ const Reschedule = () => {
         })
         .catch((error) => {
             console.error("Error updating appointment:", error);
-            alert('Error updating appointment');
+            Swal.fire({
+                html: `
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                      <!-- Logo and Title Section -->
+                      <div style="display: flex; text-align: left; margin-bottom: 20px;">
+                        <h4 style="margin: 0; font-size: 1.5rem; font-weight: bold; color: #B31942; margin-right: 15px;">
+                          Mannam & <span style="color: #0A3161;">Associates</span>
+                        </h4>
+                      </div>
+
+                      <!-- Success Image (Centered) -->
+                      <div>
+                        <img src="${success}" alt="Success" style="width: 60px; height: 60px; margin: 0 10px;" />
+                      </div>
+
+                      <!-- Title (left-aligned) -->
+                      <div style="width: 100%; text-align: center; margin-bottom: 20px;">
+                        <h1 style="margin: 0; font-size: 25px;"> Error while Updating </h1><br>
+                        <h1 style="margin: 0; font-size: 25px;"> Please Try Again </h1><br>
+                      </div>
+                    </div>
+
+                  
+                `,
+                customClass: {
+                    confirmButton: 'swal-custom-ok-button'
+                }
+          });
         });
 };
 
@@ -258,22 +286,19 @@ const Reschedule = () => {
                             Mannam & <span style="color: #0A3161;">Associates</span>
                         </h4>
                     </div>
-                    <!-- Title (left-aligned) -->
-                    <div style="width: 100%; text-align: center; margin-bottom: 20px;">
-                        <h1 style="margin: 0; font-size: 25px;">Your Consultation Rescheduled Successfully</h1>
-                    </div>
-                    <!-- Selected Slot Information -->
-                    <div style="margin-bottom: 20px;">
-                        <p style="font-size: 18px;">Your Old Appointment Details:</p>
-                        <p style="font-size: 16px; color: #555;">Date: ${selectedSlot.date.toDateString()}</p>
-                        <p style="font-size: 16px; color: #555;">Time: ${selectedSlot.time}</p>
-                    </div>
                     <!-- Appointment Data -->
                     <div style="margin-bottom: 20px;">
                         <p style="font-size: 18px;">Your New Appointment Details:</p>
                         <p style="font-size: 16px; color: #555;">Date: ${appointmentData.date}</p>
                         <p style="font-size: 16px; color: #555;">Time: ${appointmentData.time}</p>
                     </div>
+                    <!-- Selected Slot Information -->
+                    <div style="margin-bottom: 20px;">
+                        <p style="font-size: 18px;">Your Old Appointment Details:</p>
+                        <p style="font-size: 16px; color: #555;">Date: ${selectedSlot.date}</p>
+                        <p style="font-size: 16px; color: #555;">Time: ${selectedSlot.time}</p>
+                    </div>
+                    
                 </div>
             `,
             customClass: {
