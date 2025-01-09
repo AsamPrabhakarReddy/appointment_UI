@@ -290,7 +290,7 @@ const Reschedule = () => {
                     <!-- Appointment Data -->
                     <div style="margin-bottom: 20px;">
                         <p style="font-size: 18px; font-weight: bold;">Your Old Appointment Details:</p>
-                        <p style="font-size: 16px; color: #555;">Date: ${appointmentData.date.toDateString()}</p>
+                        <p style="font-size: 16px; color: #555;">Date: ${appointmentData.date}</p>
                         <p style="font-size: 16px; color: #555;">Time: ${appointmentData.time}</p>
                     </div>
                     <!-- Selected Slot Information -->
