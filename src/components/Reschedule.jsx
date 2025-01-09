@@ -171,11 +171,11 @@ const Reschedule = () => {
         .then((response) => {
             if (response.status === 200) {
                 Swal.fire({
-                                         html: `
-                                             <div style="display: flex; flex-direction: column; align-items: center;">
-                                               <!-- Logo and Title Section -->
-                                               <div style="display: flex; text-align: left; margin-bottom: 20px;">
-                                                 <h4 style="margin: 0; font-size: 1.5rem; font-weight: bold; color: #B31942; margin-right: 15px;">
+                        html: `
+                         <div style="display: flex; flex-direction: column; align-items: center;">
+                            <!-- Logo and Title Section -->
+                             <div style="display: flex; text-align: left; margin-bottom: 20px;">
+                             <h4 style="margin: 0; font-size: 1.5rem; font-weight: bold; color: #B31942; margin-right: 15px;">
                                                    Mannam & <span style="color: #0A3161;">Associates</span>
                                                  </h4>
                                                </div>
@@ -198,6 +198,7 @@ const Reschedule = () => {
                                          }
                                    });
                 // Optionally redirect or update the UI
+                navigate('/');
             } else {
                 alert('Failed to update appointment');
             }
@@ -288,16 +289,32 @@ const Reschedule = () => {
                     </div>
                     <!-- Appointment Data -->
                     <div style="margin-bottom: 20px;">
-                        <p style="font-size: 18px;">Your New Appointment Details:</p>
-                        <p style="font-size: 16px; color: #555;">Date: ${appointmentData.date}</p>
-                        <p style="font-size: 16px; color: #555;">Time: ${appointmentData.time}</p>
+                        <p style="font-size: 18px; font-weight: bold;">Your Old Appointment Details:</p>
+                        <p style="font-size: 16px; color: #555;">
+                            Date: {new Date(appointmentData.date).toLocaleDateString('en-US', {
+                                weekday: 'long',
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                            })}
+                        </p>
+                        <p style="font-size: 16px; color: #555;">Time: {appointmentData.time}</p>
                     </div>
+
                     <!-- Selected Slot Information -->
                     <div style="margin-bottom: 20px;">
-                        <p style="font-size: 18px;">Your Old Appointment Details:</p>
-                        <p style="font-size: 16px; color: #555;">Date: ${selectedSlot.date}</p>
-                        <p style="font-size: 16px; color: #555;">Time: ${selectedSlot.time}</p>
+                        <p style="font-size: 18px; font-weight: bold;">Your New Appointment Details:</p>
+                        <p style="font-size: 16px; color: #555;">
+                            Date: {new Date(selectedSlot.date).toLocaleDateString('en-US', {
+                                weekday: 'long',
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                            })}
+                        </p>
+                        <p style="font-size: 16px; color: #555;">Time: {selectedSlot.time}</p>
                     </div>
+
                     
                 </div>
             `,
