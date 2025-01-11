@@ -12,8 +12,8 @@ const CancelOrReschedule = () => {
     console.log("id ", appointmentId);
     useEffect(() => {
         if (appointmentId) {
-            fetch('http://localhost:9090/api/getDataById',
-            // fetch('https://appointment-backend-syyd.onrender.com/api/getDataById',
+            // fetch('http://localhost:9090/api/getDataById',
+            fetch('https://appointment-backend-syyd.onrender.com/api/getDataById',
                 {
                 method: 'POST',  
                 headers: {
